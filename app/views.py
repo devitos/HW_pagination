@@ -10,8 +10,8 @@ def index(request):
 
 
 def bus_stations(request):
-    bus_station_list = []
     new_base = data_base()
+    bus_station_list = []
     current_page = request.GET.get('page', '1')
     mark_start = int(current_page) * settings.STR_PER_PAGE - settings.STR_PER_PAGE
     mark_end = int(current_page) * settings.STR_PER_PAGE
@@ -42,8 +42,8 @@ def data_base():
     with open(BUS_STATION_CSV, 'r', encoding="cp1251") as file:
         file.readline()
         for data in file:
-            name = data.split(';')[1].split('»')[0]+'»'
-            street = data.split(';')[1].split('», ')[-1]
+            name = data.split(';')[1].split('»')[0][1:]+'»'
+            street = data.split(';')[1].split('», ')[-1][:-1]
             district = data.split(';')[6]
             new_base.append({'Name': name, 'Street': street, 'District': district})
     return new_base
